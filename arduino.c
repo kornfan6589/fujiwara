@@ -66,7 +66,7 @@ void getInputPins(){
 	}
 }
 
-bool detectMatch(int[] arr1, int[] arr2){  //issues with this line, when compiling "expected ',' or '...' before 'arr1'" i get this
+bool detectMatch(int arr1[], int arr2[]){  //issues with this line, when compiling "expected ',' or '...' before 'arr1'" i get this
   for(i = 0; i < 6; i++){
     for(j = 0; j < 6; j++){
       if(i != j) return false;
