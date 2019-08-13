@@ -85,7 +85,7 @@ void setOutputPins(int[] gear){
 void loop() {
   getInputPins();
   
-  if(detectMatch(curInputSeq,firstInput))        {setOutputPins(firstDisp)};
+       if(detectMatch(curInputSeq,firstInput))   {setOutputPins(firstDisp)};
   else if(detectMatch(curInputSeq,secondInput))  {setOutputPins(secondDisp)};
   else if(detectMatch(curInputSeq,thirdInput))   {setOutputPins(thirdDisp)};
   else if(detectMatch(curInputSeq,fourthInput))  {setOutputPins(fourthDisp)};
