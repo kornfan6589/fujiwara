@@ -61,13 +61,13 @@ void setup() {
 }
 
 void getInputPins(){
-  for(i = 2; i < 8; i++){
+  for(int i = 2; i < 8; i++){   //added int fixed
     curInputSeq[i] = digitalRead(i);
   }
 }
 
 bool detectMatch(int arr1[], int arr2[]){  //fixed
-  for(i = 0; i < 6; i++){
+  for(int i = 0; i < 6; i++){   //added int fixed
     for(j = 0; j < 6; j++){
       if(i != j) return false;
     }
@@ -75,8 +75,8 @@ bool detectMatch(int arr1[], int arr2[]){  //fixed
   return true;
 }
 
-void setOutputPins(int gear[]){   // "expected ',' or '...' before 'gear'" error
-  for(int i = 0; i < 14; i++){    // "'i' was not declared in this scope" error
+void setOutputPins(int gear[]){   // fixed
+  for(int i = 0; i < 14; i++){    // fixed
     digitalWrite(outputPins[i], gear[i])
   }
 }
@@ -93,6 +93,6 @@ void loop() {
   else if(detectMatch(curInputSeq,reverseInput)) {setOutputPins(reverseDisp)};
   else if(detectMatch(curInputSeq,neutralInput)) {setOutputPins(neutralDisp)};
   else if(detectMatch(curInputSeq,LU3Input))     {setOutputPins(LUDisp)};
-  else if(detectMatch(curInputSeq,LU4Input))     {setOutputPins(LUDisp)};
+  else if(detectMatch(curInputSeq,LU4Input))     {setOutputPins(LUDisp)};   //error 'curInputSeq' was not declared in this scope
 
 }
