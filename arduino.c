@@ -75,8 +75,8 @@ bool detectMatch(int arr1[], int arr2[]){  //fixed
   return true;
 }
 
-void setOutputPins(int[] gear){   // "expected ',' or '...' before 'gear'" error
-  for(i = 0; i < 14; i++){    // "'i' was not declared in this scope" error
+void setOutputPins(int gear[]){   // "expected ',' or '...' before 'gear'" error
+  for(int i = 0; i < 14; i++){    // "'i' was not declared in this scope" error
     digitalWrite(outputPins[i], gear[i])
   }
 }
