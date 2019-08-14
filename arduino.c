@@ -35,7 +35,7 @@ void setup() {
    */
   int outputPins[] = {31,33,34,35,36,
                       38,39,40,42,43,
-					            44,45,46,48};
+                      44,45,46,48};
   
   // Input patterns from Trans CPU
   int firstInput[]   = {0,0,1,0,0,0};
@@ -61,12 +61,12 @@ void setup() {
 }
 
 void getInputPins(){
-	for(i = 2; i < 8; i++){
-		curInputSeq[i] = digitalRead(i);
-	}
+  for(i = 2; i < 8; i++){
+    curInputSeq[i] = digitalRead(i);
+  }
 }
 
-bool detectMatch(int arr1[], int arr2[]){  //issues with this line, when compiling "expected ',' or '...' before 'arr1'" i get this
+bool detectMatch(int arr1[], int arr2[]){  //fixed
   for(i = 0; i < 6; i++){
     for(j = 0; j < 6; j++){
       if(i != j) return false;
@@ -75,8 +75,8 @@ bool detectMatch(int arr1[], int arr2[]){  //issues with this line, when compili
   return true;
 }
 
-void setOutputPins(int[] gear){
-  for(i = 0; i < 14; i++){
+void setOutputPins(int[] gear){   // "expected ',' or '...' before 'gear'" error
+  for(i = 0; i < 14; i++){    // "'i' was not declared in this scope" error
     digitalWrite(outputPins[i], gear[i])
   }
 }
