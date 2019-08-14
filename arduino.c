@@ -61,7 +61,7 @@ void setup() {
   parkDisp[]    = {1,0,1,1,0,1,0,0,0,0,0,1,1,1};
   reverseDisp[] = {1,0,1,1,0,1,0,0,0,0,1,1,1,1};
   neutralDisp[] = {0,1,1,0,0,1,0,0,0,1,1,0,1,0};
-  LUDisp[]      = {0,0,0,0,0,0,0,0,1,0,0,0,0,0};
+  LUDisp[]      = {0,0,0,0,0,0,0,0,1,0,0,0,0,0};    //expected primary-expression before ']' token
   
 }
 
@@ -97,6 +97,6 @@ void loop() {
   else if(detectMatch(curInputSeq,reverseInput)) {setOutputPins(reverseDisp)};
   else if(detectMatch(curInputSeq,neutralInput)) {setOutputPins(neutralDisp)};
   else if(detectMatch(curInputSeq,LU3Input))     {setOutputPins(LUDisp)};
-  else if(detectMatch(curInputSeq,LU4Input))     {setOutputPins(LUDisp)};   //error 'curInputSeq' was not declared in this scope
+  else if(detectMatch(curInputSeq,LU4Input))     {setOutputPins(LUDisp)};   //fixed?
   else return;
 }
