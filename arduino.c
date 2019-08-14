@@ -68,7 +68,7 @@ void getInputPins(){
 
 bool detectMatch(int arr1[], int arr2[]){  //fixed
   for(int i = 0; i < 6; i++){   //added int fixed
-    for(j = 0; j < 6; j++){
+    for(int j = 0; j < 6; j++){
       if(i != j) return false;
     }
   }
@@ -83,6 +83,7 @@ void setOutputPins(int gear[]){   // fixed
 
 // the loop function runs over and over again forever
 void loop() {
+  setup();
   getInputPins();
   
        if(detectMatch(curInputSeq,firstInput))   {setOutputPins(firstDisp)};
