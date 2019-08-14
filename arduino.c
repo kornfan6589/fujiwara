@@ -73,9 +73,7 @@ void getInputPins(){
 
 bool detectMatch(int arr1[], int arr2[]){  //fixed
   for(int i = 0; i < 6; i++){   //added int fixed
-    for(int j = 0; j < 6; j++){
-      if(i != j) return false;
-    }
+    if(arr1[i] != arr2[i]) return false;
   }
   return true;
 }
