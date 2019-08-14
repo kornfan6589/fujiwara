@@ -1,6 +1,11 @@
+//Declare global Variables
+int curInputSeq[6], inputPins[6], outputPins[14], 
+    firstInput[6], secondInput[6], thirdInput[6], fourthInput[6], 
+    parkInput[6], reverseInput[6], neutralInput[6], LU3Input[6], LU4Input[6],
+    firstDisp[14], secondDisp[14], thirdDisp[14], fourthDisp[14], parkDisp[14],
+    reverseDisp[14], neutralDisp[14], LUDisp[14];
+
 void setup() {
-  int curInputSeq[6];
-  
   /* Input pins are indexed as follows:
    *  
    * INDEX  PIN_NUM
@@ -12,7 +17,7 @@ void setup() {
    * 5      7
    *
    */
-  int inputPins[] = {2,3,4,5,6,7};
+  inputPins[] = {2,3,4,5,6,7};
   
   /* Output pins are indexed as follows:
    *  
@@ -33,30 +38,30 @@ void setup() {
    * 13     48       18
    *
    */
-  int outputPins[] = {31,33,34,35,36,
+  outputPins[] = {31,33,34,35,36,
                       38,39,40,42,43,
                       44,45,46,48};
   
   // Input patterns from Trans CPU
-  int firstInput[]   = {0,0,1,0,0,0};
-  int secondInput[]  = {0,0,1,1,0,0};
-  int thirdInput[]   = {0,0,0,1,0,0};
-  int fourthInput[]  = {0,0,0,0,0,0};
-  int parkInput[]    = {1,1,0,0,0,0};
-  int reverseInput[] = {0,0,0,0,0,1};
-  int neutralInput[] = {0,1,0,0,0,0};
-  int LU3Input[]     = {0,0,0,1,1,0};
-  int LU4Input[]     = {0,0,0,0,1,0};
+  firstInput[]   = {0,0,1,0,0,0};
+  secondInput[]  = {0,0,1,1,0,0};
+  thirdInput[]   = {0,0,0,1,0,0};
+  fourthInput[]  = {0,0,0,0,0,0};
+  parkInput[]    = {1,1,0,0,0,0};
+  reverseInput[] = {0,0,0,0,0,1};
+  neutralInput[] = {0,1,0,0,0,0};
+  LU3Input[]     = {0,0,0,1,1,0};
+  LU4Input[]     = {0,0,0,0,1,0};
   
   // Output patterns to Display
-  int firstDisp[]   = {0,0,0,0,0,0,0,0,0,1,0,0,1,0};
-  int secondDisp[]  = {1,0,0,1,0,1,1,1,0,0,1,1,1,1};
-  int thirdDisp[]   = {1,0,0,1,0,0,1,1,0,1,0,1,1,1};
-  int fourthDisp[]  = {0,0,1,1,0,0,0,0,0,1,0,1,1,0};
-  int parkDisp[]    = {1,0,1,1,0,1,0,0,0,0,0,1,1,1};
-  int reverseDisp[] = {1,0,1,1,0,1,0,0,0,0,1,1,1,1};
-  int neutralDisp[] = {0,1,1,0,0,1,0,0,0,1,1,0,1,0};
-  int LUDisp[]      = {0,0,0,0,0,0,0,0,1,0,0,0,0,0};
+  firstDisp[]   = {0,0,0,0,0,0,0,0,0,1,0,0,1,0};
+  secondDisp[]  = {1,0,0,1,0,1,1,1,0,0,1,1,1,1};
+  thirdDisp[]   = {1,0,0,1,0,0,1,1,0,1,0,1,1,1};
+  fourthDisp[]  = {0,0,1,1,0,0,0,0,0,1,0,1,1,0};
+  parkDisp[]    = {1,0,1,1,0,1,0,0,0,0,0,1,1,1};
+  reverseDisp[] = {1,0,1,1,0,1,0,0,0,0,1,1,1,1};
+  neutralDisp[] = {0,1,1,0,0,1,0,0,0,1,1,0,1,0};
+  LUDisp[]      = {0,0,0,0,0,0,0,0,1,0,0,0,0,0};
   
 }
 
@@ -95,5 +100,5 @@ void loop() {
   else if(detectMatch(curInputSeq,neutralInput)) {setOutputPins(neutralDisp)};
   else if(detectMatch(curInputSeq,LU3Input))     {setOutputPins(LUDisp)};
   else if(detectMatch(curInputSeq,LU4Input))     {setOutputPins(LUDisp)};   //error 'curInputSeq' was not declared in this scope
-
+  else return;
 }
