@@ -33,55 +33,65 @@ int inputPins[6] = {2, 3, 4, 5, 6, 7};
  *   13     48       18
  *
 */
-int outputPins[] = {31, 33, 34, 35, 36,
+int outputPins[14] = {31, 33, 34, 35, 36,
                     38, 39, 40, 42, 43,
                     44, 45, 46, 48};
 
 // Input patterns from Trans CPU
-int firstInput[]   = {0, 0, 1, 0, 0, 0};
-int secondInput[]  = {0, 0, 1, 1, 0, 0};
-int thirdInput[]   = {0, 0, 0, 1, 0, 0};
-int fourthInput[]  = {0, 0, 0, 0, 0, 0};
-int parkInput[]    = {1, 1, 0, 0, 0, 0};
-int reverseInput[] = {0, 0, 0, 0, 0, 1};
-int neutralInput[] = {0, 1, 0, 0, 0, 0};
-int LU3Input[]     = {0, 0, 0, 1, 1, 0};
-int LU4Input[]     = {0, 0, 0, 0, 1, 0};
+int firstInput[]   = {LOW,  LOW,  HIGH, LOW,  LOW,  LOW};
+int secondInput[]  = {LOW,  LOW,  HIGH, HIGH, LOW,  LOW};
+int thirdInput[]   = {LOW,  LOW,  LOW,  HIGH, LOW,  LOW};
+int fourthInput[]  = {LOW,  LOW,  LOW,  LOW,  LOW,  LOW};
+int parkInput[]    = {HIGH, HIGH, LOW,  LOW,  LOW,  LOW};
+int reverseInput[] = {LOW,  LOW,  LOW,  LOW,  LOW,  HIGH};
+int neutralInput[] = {LOW,  HIGH, LOW,  LOW,  LOW,  LOW};
+int LU3Input[]     = {LOW,  LOW,  LOW,  HIGH, HIGH, LOW};
+int LU4Input[]     = {LOW,  LOW,  LOW,  LOW,  HIGH, LOW};
 
 // Output patterns to Display
-int firstDisp[]   = {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0};
-int secondDisp[]  = {1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1};
-int thirdDisp[]   = {1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1};
-int fourthDisp[]  = {0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0};
-int parkDisp[]    = {1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1};
-int reverseDisp[] = {1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1};
-int neutralDisp[] = {0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0};
-int LUDisp[]      = {0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0}; //fixed
+int firstDisp[]     = {LOW,  LOW,  LOW,  LOW,  LOW, LOW,  LOW,  LOW,  LOW,  HIGH, LOW,  LOW,  HIGH, LOW};
+int secondDisp[]    = {HIGH, LOW,  LOW,  HIGH, LOW, HIGH, HIGH, HIGH, LOW,  LOW,  LOW,  HIGH, HIGH, HIGH};
+int thirdDisp[]     = {HIGH, LOW,  LOW,  HIGH, LOW, LOW,  HIGH, HIGH, LOW,  HIGH, LOW,  HIGH, HIGH, HIGH};
+int fourthDisp[]    = {LOW,  LOW,  HIGH, HIGH, LOW, LOW,  LOW,  LOW,  LOW,  HIGH, LOW,  HIGH, HIGH, LOW};
+int parkDisp[]      = {HIGH, LOW,  HIGH, HIGH, LOW, HIGH, LOW,  LOW,  LOW,  LOW,  LOW,  HIGH, HIGH, HIGH};
+int reverseDisp[]   = {HIGH, LOW,  HIGH, HIGH, LOW, HIGH, LOW,  LOW,  LOW,  LOW,  HIGH, HIGH, HIGH, HIGH};
+int neutralDisp[]   = {LOW,  HIGH, HIGH, LOW,  LOW, HIGH, LOW,  LOW,  LOW,  HIGH, HIGH, LOW,  HIGH, LOW};
+int thirdLUDisp[]   = {HIGH, LOW,  LOW,  HIGH, LOW, LOW,  HIGH, HIGH, HIGH, HIGH, LOW,  HIGH, HIGH, HIGH};
+int fourthLUDisp[]  = {LOW,  LOW,  HIGH, HIGH, LOW, LOW,  LOW,  LOW,  HIGH, HIGH, LOW,  HIGH, HIGH, LOW};
 
-void setup() {}
+void setup() {
+  //set input pins to input mode
+  for (int i = 0; i < 6; i++){
+    pinMode(inputPins[i], INPUT);
+  }
+  
+  //set output pins to output mode
+  for (int i = 0; i < 14; i++){
+    pinMode(outputPins[i], OUTPUT);
+  }
+}
 
 void getInputPins() {
-  for (int i = 2; i < 8; i++) { //added int fixed
+  for (int i = 0; i < 6; i++) {
     curInputSeq[i] = digitalRead(i);
   }
 }
 
-bool detectMatch(int arr1[], int arr2[]) { //fixed
-  for (int i = 0; i < 6; i++) { //added int fixed
+bool detectMatch(int arr1[], int arr2[]) {
+  for (int i = 0; i < 6; i++) {
     if (arr1[i] != arr2[i]) return false;
   }
   return true;
 }
 
-void setOutputPins(int gear[]) {  // fixed
-  for (int i = 0; i < 14; i++) {  // fixed
+void setOutputPins(int gear[]) {
+  for (int i = 0; i < 14; i++) {
     digitalWrite(outputPins[i], gear[i]);
   }
 }
 
 // the loop function runs over and over again forever
 void loop() {
-  setup();
   getInputPins();
 
   if      (detectMatch(curInputSeq, firstInput))   setOutputPins(firstDisp);
@@ -91,7 +101,7 @@ void loop() {
   else if (detectMatch(curInputSeq, parkInput))    setOutputPins(parkDisp);
   else if (detectMatch(curInputSeq, reverseInput)) setOutputPins(reverseDisp);
   else if (detectMatch(curInputSeq, neutralInput)) setOutputPins(neutralDisp);
-  else if (detectMatch(curInputSeq, LU3Input))     setOutputPins(LUDisp);
-  else if (detectMatch(curInputSeq, LU4Input))     setOutputPins(LUDisp); //fixed
+  else if (detectMatch(curInputSeq, LU3Input))     setOutputPins(thirdLUDisp);
+  else if (detectMatch(curInputSeq, LU4Input))     setOutputPins(fourthLUDisp);
   else return;
 }
