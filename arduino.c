@@ -24,25 +24,25 @@ int inputPins[6] = {A0, A1, A2, A3, A4, A5};
 /* Output pins are indexed as follows:
  *
  *   INDEX  PIN_NUM  ID
- *   0      31       1
- *   1      33       3
- *   2      34       4
- *   3      35       5
- *   4      36       6
- *   5      38       8
- *   6      39       9
- *   7      40       10
- *   8      42       12 DP
- *   9      43       13
- *   10     44       14
- *   11     45       15
- *   12     46       16
- *   13     48       18
+ *   0      2        1
+ *   1      3        3
+ *   2      4        4
+ *   3      5        5
+ *   4      6        6
+ *   5      7        8
+ *   6      8        9
+ *   7      9        10
+ *   8      10       12 DP
+ *   9      11       13
+ *   10     12       14
+ *   11     13       15
+ *   12     44       16
+ *   13     45       18
  *
 */
-int outputPins[14] = {31, 33, 34, 35, 36,
-                      38, 39, 40, 42, 43,
-                      44, 45, 46, 48};
+int outputPins[14] = {2,  3,  4,  5,  6,
+                      7,  8,  9,  10, 11,
+                      12, 13, 44, 45};
 
 // Input patterns from Trans CPU
 int firstInput[]   = {LOW,  LOW,  HIGH, LOW,  LOW,  LOW};
@@ -56,15 +56,15 @@ int LU3Input[]     = {LOW,  LOW,  LOW,  HIGH, HIGH, LOW};
 int LU4Input[]     = {LOW,  LOW,  LOW,  LOW,  HIGH, LOW};
 
 // Output patterns to Display
-int firstDisp[]     = {LOW,  LOW,  LOW,  LOW,  LOW, LOW,  LOW,  LOW,  LOW,  HIGH, LOW,  LOW,  HIGH, LOW};
-int secondDisp[]    = {HIGH, LOW,  LOW,  HIGH, LOW, HIGH, HIGH, HIGH, LOW,  LOW,  LOW,  HIGH, HIGH, HIGH};
-int thirdDisp[]     = {HIGH, LOW,  LOW,  HIGH, LOW, LOW,  HIGH, HIGH, LOW,  HIGH, LOW,  HIGH, HIGH, HIGH};
-int fourthDisp[]    = {LOW,  LOW,  HIGH, HIGH, LOW, LOW,  LOW,  LOW,  LOW,  HIGH, LOW,  HIGH, HIGH, LOW};
-int parkDisp[]      = {HIGH, LOW,  HIGH, HIGH, LOW, HIGH, LOW,  LOW,  LOW,  LOW,  LOW,  HIGH, HIGH, HIGH};
-int reverseDisp[]   = {HIGH, LOW,  HIGH, HIGH, LOW, HIGH, LOW,  LOW,  LOW,  LOW,  HIGH, HIGH, HIGH, HIGH};
-int neutralDisp[]   = {LOW,  HIGH, HIGH, LOW,  LOW, HIGH, LOW,  LOW,  LOW,  HIGH, HIGH, LOW,  HIGH, LOW};
-int thirdLUDisp[]   = {HIGH, LOW,  LOW,  HIGH, LOW, LOW,  HIGH, HIGH, HIGH, HIGH, LOW,  HIGH, HIGH, HIGH};
-int fourthLUDisp[]  = {LOW,  LOW,  HIGH, HIGH, LOW, LOW,  LOW,  LOW,  HIGH, HIGH, LOW,  HIGH, HIGH, LOW};
+int firstDisp[]     = {0,   0,   0,   0,   0, 0,   0,   0,   0,   255, 0,   0,   255, 0};
+int secondDisp[]    = {255, 0,   0,   255, 0, 255, 255, 255, 0,   0,   0,   255, 255, 255};
+int thirdDisp[]     = {255, 0,   0,   255, 0, 0,   255, 255, 0,   255, 0,   255, 255, 255};
+int fourthDisp[]    = {0,   0,   255, 255, 0, 0,   0,   0,   0,   255, 0,   255, 255, 0};
+int parkDisp[]      = {255, 0,   255, 255, 0, 255, 0,   0,   0,   0,   0,   255, 255, 255};
+int reverseDisp[]   = {255, 0,   255, 255, 0, 255, 0,   0,   0,   0,   255, 255, 255, 255};
+int neutralDisp[]   = {0,   255, 255, 0,   0, 255, 0,   0,   0,   255, 255, 0,   255, 0};
+int thirdLUDisp[]   = {255, 0,   0,   255, 0, 0,   255, 255, 255, 255, 0,   255, 255, 255};
+int fourthLUDisp[]  = {0,   0,   255, 255, 0, 0,   0,   0,   255, 255, 0,   255, 255, 0};
 
 void setup() {
   //set input pins to input mode
@@ -102,7 +102,10 @@ bool detectMatch(int arr1[], int arr2[]) {
 // Make the output pins match the required pattern
 void setOutputPins(int gear[]) {
   for (int i = 0; i < 14; i++) {
-    digitalWrite(outputPins[i], gear[i]);
+    if (digitalRead(A7) == HIGH){
+      analogWrite(outputPins[i], gear[i] / 12);
+    }
+    else digitalWrite(outputPins[i], gear[i]);
   }
 }
 
