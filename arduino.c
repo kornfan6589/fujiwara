@@ -1,18 +1,25 @@
+/*
+Arduino transmission display program by Kenneth Gibson, 2020
+Complain to Ken if things break
+
+Last Update: 9/12/2020
+*/
+
 //Declare global Variables
 int curInputSeq[6];
 
-/* Input pins are indexed as follows:
+/* Input pins (analog) are indexed as follows:
  *
  *     INDEX  PIN_NUM
- *     0      2
- *     1      3
- *     2      4
- *     3      5
- *     4      6
- *     5      7
+ *     0      A0
+ *     1      A1
+ *     2      A2
+ *     3      A3
+ *     4      A4
+ *     5      A5
  *
  */
-int inputPins[6] = {2, 3, 4, 5, 6, 7};
+int inputPins[6] = {A0, A1, A2, A3, A4, A5};
 
 /* Output pins are indexed as follows:
  *
@@ -34,8 +41,8 @@ int inputPins[6] = {2, 3, 4, 5, 6, 7};
  *
 */
 int outputPins[14] = {31, 33, 34, 35, 36,
-                    38, 39, 40, 42, 43,
-                    44, 45, 46, 48};
+                      38, 39, 40, 42, 43,
+                      44, 45, 46, 48};
 
 // Input patterns from Trans CPU
 int firstInput[]   = {LOW,  LOW,  HIGH, LOW,  LOW,  LOW};
@@ -63,20 +70,28 @@ void setup() {
   //set input pins to input mode
   for (int i = 0; i < 6; i++){
     pinMode(inputPins[i], INPUT);
+    digitalWrite(inputPins[i],LOW);
   }
   
   //set output pins to output mode
   for (int i = 0; i < 14; i++){
     pinMode(outputPins[i], OUTPUT);
+    digitalWrite(outputPins[i],LOW);
   }
+  /* Serial.begin(9600); */
 }
 
 void getInputPins() {
+  memset(curInputSeq, 0, sizeof(curInputSeq));
   for (int i = 0; i < 6; i++) {
-    curInputSeq[i] = digitalRead(i);
+    curInputSeq[i] = digitalRead(inputPins[i]);
+    /* String output = String(i) + String(curInputSeq[i]);
+    Serial.println(output);
+    delay(1000); */
   }
 }
 
+// Compare the current input to expected array values
 bool detectMatch(int arr1[], int arr2[]) {
   for (int i = 0; i < 6; i++) {
     if (arr1[i] != arr2[i]) return false;
@@ -84,6 +99,7 @@ bool detectMatch(int arr1[], int arr2[]) {
   return true;
 }
 
+// Make the output pins match the required pattern
 void setOutputPins(int gear[]) {
   for (int i = 0; i < 14; i++) {
     digitalWrite(outputPins[i], gear[i]);
